@@ -6,13 +6,41 @@
     "start": "expo start --dev-client",
     "android": "expo run:android",
     "ios": "expo run:ios",
-    "web": "expo start --web"
+    "web": "expo start --web",
+    "lint": "eslint . --ext .ts,.tsx",
+    "lint:fix": "eslint . --ext .ts,.tsx --fix",
+    "format": "prettier --write \"**/*.{ts,tsx,js,jsx,json,md}\"",
+    "type-check": "tsc --noEmit",
+    "proto": "node scripts/compile-proto.js",
+    "prebuild": "npm run proto"
   },
   "dependencies": {
+    "@maplibre/maplibre-react-native": "^11.0.0",
+    "@types/protobufjs": "^6.0.0",
+    "drizzle-orm": "^0.45.2",
     "expo": "~54.0.33",
+    "expo-location": "^55.1.8",
+    "expo-sensors": "^55.0.13",
+    "expo-sqlite": "^55.0.15",
     "expo-status-bar": "~3.0.9",
+    "expo-task-manager": "^55.0.14",
+    "protobufjs": "^8.0.1",
     "react": "19.1.0",
-    "react-native": "0.81.5"
+    "react-native": "0.81.5",
+    "react-native-ble-plx": "^3.5.1",
+    "react-native-quick-base64": "^2.2.2",
+    "react-native-quick-crypto": "^1.0.19",
+    "react-native-wifi-p2p": "^3.6.1"
   },
-  "private": true
-}
+  "private": true,
+  "devDependencies": {
+    "@types/react": "^19.2.14",
+    "@types/react-native": "^0.72.8",
+    "@typescript-eslint/eslint-plugin": "^8.58.2",
+    "@typescript-eslint/parser": "^8.58.2",
+    "drizzle-kit": "^0.31.10",
+    "eslint": "^9.39.4",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-prettier": "^5.5.5",
+    "eslint-plugin-react": "^7.37.5",
+    "eslint-plugin-react

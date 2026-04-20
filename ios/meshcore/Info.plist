@@ -25,7 +25,19 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>LSMinimumSystemVersion</key>
-	<string>12.0</string>
+	<string>18.0</string>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>bluetooth-central</string>
+		<string>bluetooth-peripheral</string>
+		<string>location</string>
+	</array>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>MeshCore needs access to your location to share your position with trek members and enable offline mesh networking.</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>MeshCore needs access to your location to share your position with trek members.</string>
+	<key>NSBluetoothAlwaysUsageDescription</key>
+	<string>MeshCore uses Bluetooth to create a mesh network with nearby trek members for offline communication.</string>
 	<key>NSAppTransportSecurity</key>
 	<dict>
 		<key>NSAllowsArbitraryLoads</key>

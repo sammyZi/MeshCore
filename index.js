@@ -1,4 +1,5 @@
 import { registerRootComponent } from 'expo';
+import 'react-native-quick-crypto';
 
 import App from './App';
 

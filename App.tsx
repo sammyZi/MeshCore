@@ -2,10 +2,10 @@ import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
-export default function App() {
+export default function App(): React.JSX.Element {
   return (
     <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
+      <Text>MeshCore - Offline Trek Mesh Networking</Text>
       <StatusBar style="auto" />
     </View>
   );

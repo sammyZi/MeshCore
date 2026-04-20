@@ -1,0 +1,45 @@
+syntax = "proto3";
+
+package meshcore;
+
+// LocationUpdate message for GPS coordinates
+message LocationUpdate {
+  sfixed32 lat_i = 1;        // latitude * 1e7
+  sfixed32 lon_i = 2;        // longitude * 1e7
+  uint32 altitude = 3;       // meters above sea level
+  uint32 accuracy = 4;       // meters
+  uint64 timestamp = 5;      // Unix milliseconds
+  string sender_id = 6;      // Node_ID (4 bytes hex)
+}
+
+// TextMessage for group chat
+message TextMessage {
+  string message_id = 1;     // UUID
+  string sender_id = 2;      // Node_ID (4 bytes hex)
+  string payload = 3;        // Max 140 characters
+}
+
+// SOSAlert for emergency signals
+message SOSAlert {
+  string sender_id = 1;      // Node_ID (4 bytes hex)
+  uint64 timestamp = 2;      // Unix milliseconds
+  uint32 signal_type = 3;    // 0=EMERGENCY, 1=MEDICAL, 2=LOST
+}
+
+// SystemSignal for control messages
+message SystemSignal {
+  uint32 signal_type = 1;    // 0=JOIN, 1=LEAVE, 2=END_TREK, 3=WAYPOINT, 4=GEOFENCE
+  string sender_id = 2;      // Node_ID (4 bytes hex)
+  bytes payload = 3;         // Optional data (public key for JOIN, waypoint for WAYPOINT, etc.)
+}
+
+// MeshPacket envelope for all packet types
+message MeshPacket {
+  string packet_id = 1;      // UUID for duplicate detection
+  uint32 seq_num = 2;        // Sequence number
+  uint32 ttl = 3;            // Time-to-live (hops)
+  uint32 priority = 4;       // 0=SOS, 1=ACK, 2=System, 3=Location, 4=Text
+  uint32 packet_type = 5;    // 0=Location, 1=Text, 2=SOS, 3=System
+  bytes payload = 6;         // Serialized inner message
+  bytes signature = 7;       // ECDH signature (64 bytes)
+}
