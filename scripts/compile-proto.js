@@ -1,5 +1,4 @@
-const pbjs = require('protobufjs/cli/pbjs');
-const pbts = require('protobufjs/cli/pbts');
+const { execSync } = require('child_process');
 const path = require('path');
 const fs = require('fs');
 
@@ -17,32 +16,20 @@ const tsOut = path.join(outDir, 'mesh.d.ts');
 
 console.log('Compiling Protocol Buffers...');
 
-// Compile .proto to .js
-pbjs.main(
-  [
-    '--target',
-    'static-module',
-    '--wrap',
-    'commonjs',
-    '--out',
-    jsOut,
-    protoFile,
-  ],
-  (err, output) => {
-    if (err) {
-      console.error('Error compiling proto to JS:', err);
-      process.exit(1);
-    }
-    console.log('✓ Generated', jsOut);
+try {
+  // Compile .proto to .js using protobufjs CLI
+  execSync(
+    `npx pbjs --target static-module --wrap commonjs --out ${jsOut} ${protoFile}`,
+    { stdio: 'inherit', shell: true }
+  );
+  console.log('✓ Generated', jsOut);
 
-    // Generate TypeScript definitions
-    pbts.main(['--out', tsOut, jsOut], (err, output) => {
-      if (err) {
-        console.error('Error generating TypeScript definitions:', err);
-        process.exit(1);
-      }
-      console.log('✓ Generated', tsOut);
-      console.log('Protocol Buffers compilation complete!');
-    });
-  }
-);
+  // Generate TypeScript definitions
+  execSync(`npx pbts --out ${tsOut} ${jsOut}`, { stdio: 'inherit', shell: true });
+  console.log('✓ Generated', tsOut);
+  console.log('Protocol Buffers compilation complete!');
+} catch (error) {
+  console.error('Error compiling Protocol Buffers:', error.message);
+  process.exit(1);
+}
+
