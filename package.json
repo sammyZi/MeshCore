@@ -16,6 +16,8 @@
   },
   "dependencies": {
     "@maplibre/maplibre-react-native": "^11.0.0",
+    "@react-native-async-storage/async-storage": "^3.0.2",
+    "@reduxjs/toolkit": "^2.11.2",
     "@types/protobufjs": "^6.0.0",
     "drizzle-orm": "^0.45.2",
     "expo": "~54.0.33",
@@ -30,7 +32,10 @@
     "react-native-ble-plx": "^3.5.1",
     "react-native-quick-base64": "^2.2.2",
     "react-native-quick-crypto": "^1.0.19",
-    "react-native-wifi-p2p": "^3.6.1"
+    "react-native-wifi-p2p": "^3.6.1",
+    "react-redux": "^9.2.0",
+    "redux-persist": "^6.0.0",
+    "zustand": "^5.0.12"
   },
   "private": true,
   "devDependencies": {
@@ -43,4 +48,9 @@
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-prettier": "^5.5.5",
     "eslint-plugin-react": "^7.37.5",
-    "eslint-plugin-react
+    "eslint-plugin-react-native": "^5.0.0",
+    "prettier": "^3.8.3",
+    "protobufjs-cli": "^2.0.1",
+    "typescript": "^5.9.3"
+  }
+}
