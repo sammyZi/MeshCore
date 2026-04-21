@@ -15,7 +15,7 @@
     "prebuild": "npm run proto"
   },
   "dependencies": {
-    "@maplibre/maplibre-react-native": "^11.0.0",
+    "@maplibre/maplibre-react-native": "^11.0.1",
     "@react-native-async-storage/async-storage": "^3.0.2",
     "@reduxjs/toolkit": "^2.11.2",
     "@supabase/supabase-js": "^2.104.0",
