@@ -74,14 +74,11 @@ export class TrekManager {
       .select('trek_id, join_code')
       .single();
 
-    let trekId;
-    let joinCode;
+    let trekId: string;
+    let joinCode: string;
 
     if (trekError || !trekData) {
-      // Mocking for testing if Supabase isn't fully set up yet
-      console.warn('Supabase trek creation failed or not implemented, using local mock.', trekError);
-      trekId = 'mock-trek-' + Date.now();
-      joinCode = 'AB12CD';
+      throw new Error(`Failed to create trek in Supabase: ${trekError?.message || 'Unknown error'}`);
     } else {
       trekId = trekData.trek_id;
       joinCode = trekData.join_code;
