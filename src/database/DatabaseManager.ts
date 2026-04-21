@@ -236,7 +236,7 @@ export class DatabaseManager {
         
         // Wait before retry with exponential backoff
         if (attempt < maxRetries - 1) {
-          await new Promise(resolve => setTimeout(resolve, Math.pow(2, attempt) * 1000));
+          await new Promise<void>(resolve => setTimeout(resolve, Math.pow(2, attempt) * 1000));
         }
       }
     }
@@ -255,7 +255,7 @@ export class DatabaseManager {
     email: string;
     display_name: string;
     avatar_color: string;
-    public_key: Buffer;
+    public_key: Uint8Array | any;
     node_id: string;
     created_at: Date;
   }): Promise<void> {
