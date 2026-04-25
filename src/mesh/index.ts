@@ -8,6 +8,8 @@
  * - RouteCache:        AODV route cache with 10-minute expiry
  * - MeshRouter:        Gossip protocol, adaptive TTL, AODV, hybrid unicast
  * - PacketQueue:       Priority queue with SOS preemption and retry logic
+ * - PacketCodec:       Protobuf serialization / deserialization for all packet types
+ * - SequenceTracker:   Monotonic seq_num generation and gap detection
  */
 
 export { BLEMeshManager, MESH_LOCATION_TASK, MESH_BLE_WATCHDOG_TASK } from './BLEManager';
@@ -35,3 +37,35 @@ export {
   PACKET_TYPE_PRIORITY_MAP,
 } from './PacketQueue';
 export type { QueuedPacket, PacketStatus, TransmitCallback } from './PacketQueue';
+export {
+  // Encoding
+  encodeLocationUpdate,
+  encodeTextMessage,
+  encodeSOSAlert,
+  encodeSystemSignal,
+  encodeMeshPacket,
+  // Decoding
+  decodeLocationUpdate,
+  decodeTextMessage,
+  decodeSOSAlert,
+  decodeSystemSignal,
+  decodeMeshPacket,
+  // Sequence tracking
+  SequenceTracker,
+  // Signal type constants
+  SIGNAL_JOIN,
+  SIGNAL_LEAVE,
+  SIGNAL_END_TREK,
+  SIGNAL_WAYPOINT,
+  SIGNAL_GEOFENCE,
+  SOS_EMERGENCY,
+  SOS_MEDICAL,
+  SOS_LOST,
+} from './PacketCodec';
+export type {
+  DecodedLocationUpdate,
+  DecodedTextMessage,
+  DecodedSOSAlert,
+  DecodedSystemSignal,
+  DecodedMeshPacket,
+} from './PacketCodec';
