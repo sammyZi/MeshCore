@@ -2,6 +2,7 @@ import { BleManager, Device, Subscription, BleError, ScanMode } from 'react-nati
 import { Buffer } from '@craftzdog/react-native-buffer';
 import * as TaskManager from 'expo-task-manager';
 import { Platform } from 'react-native';
+import { WiFiDirectManager } from './WiFiDirectManager';
 
 export const MESH_LOCATION_TASK = 'MESH_LOCATION_TASK';
 export const MESH_BLE_WATCHDOG_TASK = 'MESH_BLE_WATCHDOG_TASK';
@@ -15,6 +16,7 @@ interface ConnectedPeer {
 
 export class BLEMeshManager {
   private manager: BleManager;
+  private wifiManager: WiFiDirectManager;
   private serviceUUID: string | null = null;
   private connections = new Map<string, ConnectedPeer>();
   private readonly MAX_CONNECTIONS = 7;
@@ -25,6 +27,7 @@ export class BLEMeshManager {
 
   constructor() {
     this.manager = new BleManager();
+    this.wifiManager = new WiFiDirectManager();
     this.registerBackgroundTasks();
   }
 
@@ -194,10 +197,27 @@ export class BLEMeshManager {
     const peer = this.connections.get(deviceId);
     if (!peer || !this.serviceUUID) return false;
 
+    // 9.2 Wi-Fi Direct fallback logic
+    // Use Wi-Fi Direct for packets > 512 bytes when available
+    if (packet.length > 512) {
+      try {
+        const wifiAvailable = await this.wifiManager.isAvailable();
+        if (wifiAvailable) {
+          console.log(`Sending packet >512 bytes via Wi-Fi Direct to ${deviceId}`);
+          await this.wifiManager.sendPacket(packet);
+          return true; // Successfully sent
+        } else {
+          console.log('Wi-Fi Direct unavailable. Falling back to BLE fragmentation.');
+        }
+      } catch (err) {
+        console.error('Wi-Fi Direct send failed, falling back to BLE:', err);
+      }
+    }
+
     let retryCount = 0;
     while (retryCount < 3) {
       try {
-        // Implement fragmentation for > 512 bytes
+        // Implement BLE fragmentation
         const MAX_MTU = 512; 
         
         if (packet.length <= MAX_MTU) {
