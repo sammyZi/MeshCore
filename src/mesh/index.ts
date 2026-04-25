@@ -7,6 +7,7 @@
  * - DuplicateCache:    LRU cache for mesh packet deduplication
  * - RouteCache:        AODV route cache with 10-minute expiry
  * - MeshRouter:        Gossip protocol, adaptive TTL, AODV, hybrid unicast
+ * - PacketQueue:       Priority queue with SOS preemption and retry logic
  */
 
 export { BLEMeshManager, MESH_LOCATION_TASK, MESH_BLE_WATCHDOG_TASK } from './BLEManager';
@@ -29,3 +30,8 @@ export {
   PRIORITY_TEXT,
 } from './MeshRouter';
 export type { MeshPacketInfo, MeshRouterCallbacks } from './MeshRouter';
+export {
+  PacketQueue,
+  PACKET_TYPE_PRIORITY_MAP,
+} from './PacketQueue';
+export type { QueuedPacket, PacketStatus, TransmitCallback } from './PacketQueue';
